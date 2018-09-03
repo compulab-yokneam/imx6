@@ -1,0 +1,25 @@
+From 706be0aa756afa60b3a488887de3a21ae464b91e Mon Sep 17 00:00:00 2001
+From: Valentin Raevsky <valentin@compulab.co.il>
+Date: Mon, 12 Dec 2016 13:27:05 +0200
+Subject: [PATCH 33/90] ARM: i.MX6: Disable uart1 RX-DMA
+
+Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
+---
+ arch/arm/boot/dts/imx6qdl-cm-fx6.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/arm/boot/dts/imx6qdl-cm-fx6.dtsi b/arch/arm/boot/dts/imx6qdl-cm-fx6.dtsi
+index 7f18a14..426e3c2 100644
+--- a/arch/arm/boot/dts/imx6qdl-cm-fx6.dtsi
++++ b/arch/arm/boot/dts/imx6qdl-cm-fx6.dtsi
+@@ -638,6 +638,7 @@
+ &uart1 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&pinctrl_uart1>;
++	dma-names = "","tx";
+ 	status = "okay";
+ };
+ 
+-- 
+2.7.4
+

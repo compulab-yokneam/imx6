@@ -1,0 +1,46 @@
+From fcde9695c2a9cd6b8f87b49de99ad1229524ddbb Mon Sep 17 00:00:00 2001
+From: Nikita Kiryanov <nikita@compulab.co.il>
+Date: Mon, 17 Aug 2015 20:01:55 +0300
+Subject: [PATCH 18/53] arm: mx6: cm-fx6: print PCB revision
+
+Print board revision for cm-fx6.
+
+Signed-off-by: Nikita Kiryanov <nikita@compulab.co.il>
+---
+ board/compulab/cm_fx6/cm_fx6.c | 7 +++++++
+ include/configs/cm_fx6.h       | 1 +
+ 2 files changed, 8 insertions(+)
+
+diff --git a/board/compulab/cm_fx6/cm_fx6.c b/board/compulab/cm_fx6/cm_fx6.c
+index 7b3167e..4617e35 100644
+--- a/board/compulab/cm_fx6/cm_fx6.c
++++ b/board/compulab/cm_fx6/cm_fx6.c
+@@ -613,6 +613,13 @@ int checkboard(void)
+ 	return 0;
+ }
+ 
++int misc_init_r(void)
++{
++	cl_print_pcb_info();
++
++	return 0;
++}
++
+ void dram_init_banksize(void)
+ {
+ 	gd->bd->bi_dram[0].start = PHYS_SDRAM_1;
+diff --git a/include/configs/cm_fx6.h b/include/configs/cm_fx6.h
+index 247f8b6..ed3bb1c 100644
+--- a/include/configs/cm_fx6.h
++++ b/include/configs/cm_fx6.h
+@@ -241,6 +241,7 @@
+ #define CONFIG_SYS_MALLOC_LEN			(10 * 1024 * 1024)
+ #define CONFIG_SYS_U_BOOT_MAX_SIZE_SECTORS	800 /* 400 KB */
+ #define CONFIG_OF_BOARD_SETUP
++#define CONFIG_MISC_INIT_R
+ 
+ /* SPL */
+ #include "imx6_spl.h"
+-- 
+2.7.4
+

@@ -1,0 +1,28 @@
+From 0467353f0d455c86906f73b5dfcd0be65c57c152 Mon Sep 17 00:00:00 2001
+From: Valentin Raevsky <valentin@compulab.co.il>
+Date: Tue, 23 Jan 2018 14:37:41 +0200
+Subject: [PATCH 82/90] ARM: i.MX6: cl-som-imx6: Update defconfig BCMDHD=y
+
+Weird: This config turned to =m somehow.
+
+Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
+---
+ arch/arm/configs/cl_som_imx6_defconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm/configs/cl_som_imx6_defconfig b/arch/arm/configs/cl_som_imx6_defconfig
+index 982eda9..ab8ddc8 100644
+--- a/arch/arm/configs/cl_som_imx6_defconfig
++++ b/arch/arm/configs/cl_som_imx6_defconfig
+@@ -215,7 +215,7 @@ CONFIG_PPP_BSDCOMP=y
+ CONFIG_PPP_DEFLATE=y
+ CONFIG_PPP_FILTER=y
+ CONFIG_ATH_CARDS=y
+-CONFIG_BCMDHD=m
++CONFIG_BCMDHD=y
+ CONFIG_BCMDHD_SDIO=y
+ CONFIG_BCMDHD_FW_PATH="/lib/firmware/bcm/ZP_BCM4339/fw_bcmdhd.bin"
+ CONFIG_BCMDHD_NVRAM_PATH="/lib/firmware/bcm/ZP_BCM4339/bcmdhd.ZP.SDIO.cal"
+-- 
+2.7.4
+

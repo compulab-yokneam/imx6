@@ -1,0 +1,62 @@
+# Prepare build environment
+
+* Download IMX6_M6.0.1_2.1.0_ANDROID_DOCS from the https://www.nxp.com/webapp/Download
+* Follow the instructions of the "android_M6.0.1_2.1.0_docs/Android_User's_Guide.pdf" and stop on the step 3.3
+* Set an environment variable `A`
+[source,console]
+export A=~/myandroid
+
+# Clone this repository
+[source,console]
+mkdir ~/compulab-imx6
+git clone https://github.com/compulab-yokneam/imx6.git ~/compulab-imx6
+cd ~/compulab-imx6
+export C=$(pwd)
+
+# Add `CompuLab imx6` boards support
+## Apply the patches:
+* U-boot
+[source,console]
+git -C ${A}/bootable/bootloader/uboot-imx checkout -b compulab-imx6 33711bd
+git -C ${A}/bootable/bootloader/uboot-imx am ${C}/bootable/bootloader/uboot-imx/*.patch
+
+* Kernel
+[source,console]
+git -C ${A}/kernel_imx checkout -b compulab-imx6 9f38c97
+git -C ${A}/kernel_imx am ${C}/kernel_imx/*.patch
+
+* Board
+[source,console]
+git -C ${A}/device/fsl checkout -b compulab-imx6 342d1e1
+git -C ${A}/device/fsl am ${C}/device/fsl/*.patch
+
+* Build system
+[source,console]
+git -C ${A}/build checkout -b compulab-imx6 cfe188e
+git -C ${A}/build am ${C}/build/*.patch
+
+# Create the image
+* Set a desire machine configuration
+** `export MACHINE=cm-fx6-evk`
+** `export MACHINE=cl-som-imx6`
+
+* Goto `~/myandroid` and issue the sequence:
+[source,console]
+cd ${A}
+source build/envsetup.sh
+lunch ${MACHINE}-eng
+make -j 8 2>&1 | tee build-log.txt
+
+* Wait for this message:
+[source,console]
+#### make completed successfully (XX:YY (mm:ss)) ####
+
+* Goto the target output directory and generate the image.
+[source,console]
+cd out/target/product/${MACHINE}
+sudo ${C}/tools/create-image
+
+# Create a bootable SD-card
+An 4G image gets created at `/tmp` directory with the `/tmp/image-${MACHINE}-$(date +%Y_%m_%d-%H_%M_%S)` name. Create a bootable SD-card this way:
+[source,console]
+pv /tmp/image-${MACHINE}-2018_08_26-19_10_14 | sudo dd of=/dev/sdX bs=1M

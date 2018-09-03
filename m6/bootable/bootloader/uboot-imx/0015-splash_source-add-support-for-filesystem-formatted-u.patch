@@ -1,0 +1,65 @@
+From 35c387ad1424d35e2caf931fd352d41841e0fd51 Mon Sep 17 00:00:00 2001
+From: Nikita Kiryanov <nikita@compulab.co.il>
+Date: Mon, 17 Aug 2015 19:45:38 +0300
+Subject: [PATCH 15/53] splash_source: add support for filesystem formatted usb
+
+Add support for loading splash image from USB drive formatted with a
+filesystem.
+
+Signed-off-by: Nikita Kiryanov <nikita@compulab.co.il>
+---
+ common/splash_source.c | 11 +++++++++++
+ include/splash.h       |  1 +
+ 2 files changed, 12 insertions(+)
+
+diff --git a/common/splash_source.c b/common/splash_source.c
+index cb45c63..937ce17 100644
+--- a/common/splash_source.c
++++ b/common/splash_source.c
+@@ -12,6 +12,7 @@
+ #include <splash.h>
+ #include <spi_flash.h>
+ #include <spi.h>
++#include <usb.h>
+ #include <bmp_layout.h>
+ #include <fs.h>
+ 
+@@ -112,6 +113,9 @@ static int splash_select_fs_dev(struct splash_location *location)
+ 	case SPLASH_STORAGE_MMC:
+ 		res = fs_set_blk_dev("mmc", location->devpart, FS_TYPE_ANY);
+ 		break;
++	case SPLASH_STORAGE_USB:
++		res = fs_set_blk_dev("usb", location->devpart, FS_TYPE_ANY);
++		break;
+ 	default:
+ 		printf("Error: unsupported location storage.\n");
+ 		return -ENODEV;
+@@ -128,6 +132,13 @@ static int splash_load_fs(struct splash_location *location, u32 bmp_load_addr)
+ 	int res;
+ 	loff_t bmp_size;
+ 
++#ifdef CONFIG_USB_STORAGE
++	if (location->storage == SPLASH_STORAGE_USB) {
++		usb_init();
++		usb_stor_scan(1);
++	}
++#endif
++
+ 	res = splash_select_fs_dev(location);
+ 	if (res)
+ 		return res;
+diff --git a/include/splash.h b/include/splash.h
+index d1fba69..b728bd6 100644
+--- a/include/splash.h
++++ b/include/splash.h
+@@ -28,6 +28,7 @@ enum splash_storage {
+ 	SPLASH_STORAGE_NAND,
+ 	SPLASH_STORAGE_SF,
+ 	SPLASH_STORAGE_MMC,
++	SPLASH_STORAGE_USB,
+ };
+ 
+ enum splash_flags {
+-- 
+2.7.4
+

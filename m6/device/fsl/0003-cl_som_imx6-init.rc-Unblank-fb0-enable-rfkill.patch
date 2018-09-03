@@ -1,0 +1,35 @@
+From b42ee3201af1fcda5aba7873a4d530ad695e1388 Mon Sep 17 00:00:00 2001
+From: Valentin Raevsky <valentin@compulab.co.il>
+Date: Wed, 29 Aug 2018 15:53:00 +0300
+Subject: [PATCH 3/3] cl_som_imx6: init.rc: Unblank fb0 & enable rfkill
+
+Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
+---
+ cl_som_imx6/init.rc | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/cl_som_imx6/init.rc b/cl_som_imx6/init.rc
+index b4f245a..788a36c 100755
+--- a/cl_som_imx6/init.rc
++++ b/cl_som_imx6/init.rc
+@@ -21,6 +21,8 @@ on init
+     export COMPONENT_REGISTER_FILE /system/etc/component_register
+     export CONTENTPIPE_REGISTER_FILE /system/etc/contentpipe_register
+     
++    # Unblank fb0
++    write /sys/class/graphics/fb0/blank 0
+ 
+     # disable cursor blink for fbcon, if no splash screen support
+     write /sys/class/graphics/fbcon/cursor_blink 0
+@@ -80,7 +82,7 @@ on boot
+     # Prepare for bluetooth
+     chmod 665 /sys/class/rfkill/rfkill0/state
+     chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/state
+-    write /sys/class/rfkill/rfkill0/state 0
++    write /sys/class/rfkill/rfkill0/state 1
+ 
+     # Prepare for RIL
+     setprop gsm.ril.delay 15
+-- 
+2.7.4
+

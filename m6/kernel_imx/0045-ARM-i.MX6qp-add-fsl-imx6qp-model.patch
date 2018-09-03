@@ -1,0 +1,25 @@
+From ba2686c8f5466f0d30307d3c385a6785249a3753 Mon Sep 17 00:00:00 2001
+From: Valentin Raevsky <valentin@compulab.co.il>
+Date: Mon, 16 Jan 2017 16:02:28 +0200
+Subject: [PATCH 45/90] ARM: i.MX6qp: add fsl,imx6qp model
+
+Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
+---
+ arch/arm/mach-imx/mach-imx6q.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/arm/mach-imx/mach-imx6q.c b/arch/arm/mach-imx/mach-imx6q.c
+index 92f8e84..1273747 100644
+--- a/arch/arm/mach-imx/mach-imx6q.c
++++ b/arch/arm/mach-imx/mach-imx6q.c
+@@ -487,6 +487,7 @@ static void __init imx6q_init_irq(void)
+ static const char * const imx6q_dt_compat[] __initconst = {
+ 	"fsl,imx6dl",
+ 	"fsl,imx6q",
++	"fsl,imx6qp",
+ 	NULL,
+ };
+ 
+-- 
+2.7.4
+

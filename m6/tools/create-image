@@ -1,0 +1,48 @@
+#!/bin/bash -xe
+
+id=$(id -u)
+
+if [[ ${id} -ne 0 ]];then
+bn=$(basename $0)
+cat << eom
+    Administrative credentials must be granted.
+    Issue the file this way: sudo ${bn}
+eom
+exit
+fi
+
+if [[ ! -e android-info.txt ]];then
+cat << eom
+	!WARNING!
+Missing android-info.txt file
+Make sure that the "`pwd`" is the device target directory.
+eom
+exit 2
+fi
+
+export $(cat android-info.txt)
+if [[ -z ${board} ]];then
+cat << eom
+	!WARNING!
+The android-info.txt file contains no board information.
+File : `cat android-info.txt`
+eom
+exit 3
+fi
+
+SCRIPT=$(dirname $(readlink -f $0))
+
+image=/tmp/image-${board,,}-$(date +%Y_%m_%d-%H_%M_%S)
+dd if=/dev/zero of=${image} bs=1M count=4096
+
+export node=$(losetup --show --find ${image})
+export bpart=${node}"p1"
+
+${SCRIPT}/a2cl.image
+partprobe ${node}
+${SCRIPT}/a2cl.boot-part
+losetup -d ${node}
+
+cat << eom
+Image file: ${image} created successfully
+eom

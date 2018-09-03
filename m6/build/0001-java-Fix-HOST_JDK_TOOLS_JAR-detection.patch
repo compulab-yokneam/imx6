@@ -1,0 +1,30 @@
+From 3f8734ce20ebcec139b46dcd8b47cbde413d9aa8 Mon Sep 17 00:00:00 2001
+From: Valentin Raevsky <valentin@compulab.co.il>
+Date: Sat, 25 Aug 2018 21:16:06 +0300
+Subject: [PATCH 1/2] java: Fix HOST_JDK_TOOLS_JAR detection
+
+Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
+---
+ core/config.mk | 6 ------
+ 1 file changed, 6 deletions(-)
+
+diff --git a/core/config.mk b/core/config.mk
+index d6aa6f7..742b2a7 100644
+--- a/core/config.mk
++++ b/core/config.mk
+@@ -507,12 +507,6 @@ endif
+ 
+ HOST_JDK_TOOLS_JAR:= $(shell $(BUILD_SYSTEM)/find-jdk-tools-jar.sh)
+ 
+-ifneq ($(HOST_JDK_TOOLS_JAR),)
+-ifeq ($(wildcard $(HOST_JDK_TOOLS_JAR)),)
+-$(error Error: could not find jdk tools.jar, please check if your JDK was installed correctly)
+-endif
+-endif
+-
+ # Is the host JDK 64-bit version?
+ HOST_JDK_IS_64BIT_VERSION :=
+ ifneq ($(filter 64-Bit, $(shell java -version 2>&1)),)
+-- 
+2.7.4
+

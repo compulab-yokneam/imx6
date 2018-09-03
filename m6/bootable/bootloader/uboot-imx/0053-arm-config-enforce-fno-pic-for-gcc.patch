@@ -1,0 +1,52 @@
+From c12de4d85800931e1b1a4c9cef22deae18fe7a1c Mon Sep 17 00:00:00 2001
+From: Valentin Raevsky <valentin@compulab.co.il>
+Date: Sun, 26 Aug 2018 16:37:01 +0300
+Subject: [PATCH 53/53] arm: config: enforce -fno-pic for gcc
+
+Android's tool chain enable the -mandroid at default.
+This option will enable the -fpic, which cause uboot compilation
+failure:
+"
+ LD      u-boot
+ u-boot contains unexpected relocations: R_ARM_ABS32
+ R_ARM_RELATIVE
+"
+
+In my testcase, arm-linux-androideabi-gcc-4.9 internally
+enables '-fpic', so when compiling code, there will be
+relocation entries using type R_ARM_GOT_BREL and .got
+section. When linking all the built-in.o using ld, there
+will be R_ARM_ABS32 relocation entry and .got section
+in the final u-boot elf image. This can not be handled
+by u-boot, since u-boot only expects R_ARM_RELATIVE
+relocation entry.
+arm-poky-linux-gnueabi-gcc-4.9 default does not enable '-fpic',
+so there is not .got section and R_ARM_GOT_BREL in built-in.o.
+And in the final u-boot elf image, all relocation entries are
+R_ARM_RELATIVE.
+
+we can pass '-fno-pic' to xxx-gcc to disable pic. whether
+the toolchain internally enables or disables pic, '-fno-pic'
+can work well.
+
+Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
+---
+ arch/arm/config.mk | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm/config.mk b/arch/arm/config.mk
+index 0550225..4ae54a2 100644
+--- a/arch/arm/config.mk
++++ b/arch/arm/config.mk
+@@ -105,7 +105,7 @@ ALL-y += checkarmreloc
+ # The movt / movw can hardcode 16 bit parts of the addresses in the
+ # instruction. Relocation is not supported for that case, so disable
+ # such usage by requiring word relocations.
+-PLATFORM_CPPFLAGS += $(call cc-option, -mword-relocations)
++PLATFORM_CPPFLAGS += $(call cc-option, -fno-pic)
+ endif
+ 
+ # limit ourselves to the sections we want in the .bin.
+-- 
+2.7.4
+

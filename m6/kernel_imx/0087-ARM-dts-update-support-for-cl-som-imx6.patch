@@ -1,0 +1,40 @@
+From f44859d1e83ca711b2f1f1a712f4c7f918b529e3 Mon Sep 17 00:00:00 2001
+From: Valentin Raevsky <valentin@compulab.co.il>
+Date: Sun, 26 Aug 2018 20:29:35 +0300
+Subject: [PATCH 87/90] ARM: dts: update support for cl-som-imx6
+
+Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
+---
+ arch/arm/boot/dts/Makefile | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+index 4bfc521..d1d8a6a 100644
+--- a/arch/arm/boot/dts/Makefile
++++ b/arch/arm/boot/dts/Makefile
+@@ -337,7 +337,21 @@ dtb-$(CONFIG_SOC_IMX6Q) += \
+ 	imx6dl-sbc-fx6m.dtb \
+ 	imx6q-cm-fx6.dtb \
+ 	imx6q-sbc-fx6.dtb \
+-	imx6q-sbc-fx6m.dtb
++	imx6q-sbc-fx6m.dtb \
++	imx6dl-cl-som-imx6.dtb \
++	imx6dl-cm-fx6.dtb \
++	imx6dl-sbc-imx6.dtb \
++	imx6dl-sbc-imx6-hdmi.dtb \
++	imx6q-cl-som-imx6.dtb \
++	imx6qp-cl-som-imx6.dtb \
++	imx6qp-sbc-imx6.dtb \
++	imx6qp-sbc-imx6-dvi.dtb \
++	imx6qp-sbc-imx6-hdmi.dtb \
++	imx6qp-sbc-imx6-mipi.dtb \
++	imx6q-sbc-imx6.dtb \
++	imx6q-sbc-imx6-dvi.dtb \
++	imx6q-sbc-imx6-hdmi.dtb \
++	imx6q-sbc-imx6-mipi.dtb
+ dtb-$(CONFIG_SOC_IMX6SL) += \
+ 	imx6sl-evk.dtb \
+ 	imx6sl-evk-ldo.dtb \
+-- 
+2.7.4
+

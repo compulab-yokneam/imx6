@@ -1,0 +1,51 @@
+From 39657b1a9be2629bbc8b98b1f3f6ef1ef1ab64f3 Mon Sep 17 00:00:00 2001
+From: Valentin Raevsky <valentin@compulab.co.il>
+Date: Thu, 21 Dec 2017 13:39:15 +0200
+Subject: [PATCH 81/90] bcmdhd: Read driver mode type from config
+
+Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
+---
+ arch/arm/configs/cl_som_imx6_defconfig | 2 +-
+ drivers/net/wireless/bcmdhd/Makefile   | 6 ++++--
+ 2 files changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/arch/arm/configs/cl_som_imx6_defconfig b/arch/arm/configs/cl_som_imx6_defconfig
+index ab8ddc8..982eda9 100644
+--- a/arch/arm/configs/cl_som_imx6_defconfig
++++ b/arch/arm/configs/cl_som_imx6_defconfig
+@@ -215,7 +215,7 @@ CONFIG_PPP_BSDCOMP=y
+ CONFIG_PPP_DEFLATE=y
+ CONFIG_PPP_FILTER=y
+ CONFIG_ATH_CARDS=y
+-CONFIG_BCMDHD=y
++CONFIG_BCMDHD=m
+ CONFIG_BCMDHD_SDIO=y
+ CONFIG_BCMDHD_FW_PATH="/lib/firmware/bcm/ZP_BCM4339/fw_bcmdhd.bin"
+ CONFIG_BCMDHD_NVRAM_PATH="/lib/firmware/bcm/ZP_BCM4339/bcmdhd.ZP.SDIO.cal"
+diff --git a/drivers/net/wireless/bcmdhd/Makefile b/drivers/net/wireless/bcmdhd/Makefile
+index 791b9ba..e2f43a1 100644
+--- a/drivers/net/wireless/bcmdhd/Makefile
++++ b/drivers/net/wireless/bcmdhd/Makefile
+@@ -20,7 +20,9 @@ DHDCFLAGS += -DWL_CFG80211
+ # Print out kernel panic point of file and line info when assertion happened
+ DHDCFLAGS += -DBCMASSERT_LOG
+ 
+-DHDCFLAGS += -DENABLE_INSMOD_NO_FW_LOAD
++ifeq ($(CONFIG_BCMDHD),y)
++  DHDCFLAGS += -DENABLE_INSMOD_NO_FW_LOAD
++endif
+ 
+ # keepalive
+ DHDCFLAGS += -DCUSTOM_KEEP_ALIVE_SETTING=28000
+@@ -96,7 +98,7 @@ DHDCFLAGS += -DWL_IFACE_COMB_NUM_CHANNELS
+ # m: module type driver
+ # y: built-in type driver
+ ##########################
+-DRIVER_TYPE ?= y
++DRIVER_TYPE ?= $(CONFIG_BCMDHD)
+ 
+ #########################
+ # Chip dependent feature
+-- 
+2.7.4
+
