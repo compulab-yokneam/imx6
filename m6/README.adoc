@@ -8,7 +8,7 @@ export A=~/myandroid
 
 # Clone this repository
 [source,console]
-mkdir ~/compulab-imx6
+mkdir ~/compulab-imx6/m6
 git clone https://github.com/compulab-yokneam/imx6.git ~/compulab-imx6
 cd ~/compulab-imx6
 export C=$(pwd)
