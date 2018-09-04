@@ -1,7 +1,7 @@
 # Prepare build environment
 
-* Download IMX6_M6.0.1_2.1.0_ANDROID_DOCS from the https://www.nxp.com/webapp/Download
-* Follow the instructions of the "android_M6.0.1_2.1.0_docs/Android_User's_Guide.pdf" and stop on the step 3.3
+* Download https://www.nxp.com/webapp/Download?colCode=IMX6_M6.0.1_2.1.0_ANDROID_DOCS[`IMX6_M6.0.1_2.1.0_ANDROID_DOCS`]
+* Follow the instructions of the `android_M6.0.1_2.1.0_docs/Android_User's_Guide.pdf` and stop on the step 3.3
 * Set an environment variable `A`
 [source,console]
 export A=~/myandroid
