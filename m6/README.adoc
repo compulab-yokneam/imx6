@@ -60,3 +60,6 @@ sudo ${C}/tools/create-image
 An 4G image gets created at `/tmp` directory with the `/tmp/image-${MACHINE}-$(date +%Y_%m_%d-%H_%M_%S)` name. Create a bootable SD-card this way:
 [source,console]
 pv /tmp/image-${MACHINE}-2018_08_26-19_10_14 | sudo dd of=/dev/sdX bs=1M
+
+# Pre-Built Development Image
+https://drive.google.com/open?id=1AvYaflrEBr_mYdhi6oCIECF8RH9BuwqX[cl-som-imx6 Marshmallow 6 Image]
