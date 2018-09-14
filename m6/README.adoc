@@ -37,8 +37,8 @@ git -C ${A}/build am ${C}/build/*.patch
 
 # Create the image
 * Set a desire machine configuration
-** `export MACHINE=cm-fx6-evk`
-** `export MACHINE=cl-som-imx6`
+** `export MACHINE=cm_fx6_evk`
+** `export MACHINE=cl_som_imx6`
 
 * Goto `~/myandroid` and issue the sequence:
 [source,console]
