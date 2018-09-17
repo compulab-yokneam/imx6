@@ -63,3 +63,13 @@ pv /tmp/image-${MACHINE}-2018_09_03-08_19_26 | sudo dd of=/dev/sdX bs=1M
 
 # Pre-Built Development Image
 https://drive.google.com/open?id=1AvYaflrEBr_mYdhi6oCIECF8RH9BuwqX[cl-som-imx6 Marshmallow 6 Image]
+
+# Boot from SD card
+* Turn off the board.
+* Insert the created bootable SD-card into the SDIO boot slot.
+* Press and hold the `SW5` switch.
+* Turn on the board.
+* Release the `SW5` switch.
+* As soon as the `U-Boot` prompt turns out, press any key and issue:
+[source,console]
+env default -a; boot
